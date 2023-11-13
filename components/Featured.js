@@ -67,8 +67,8 @@ export default function Featured({ product }) {
                 <ColumnsWrapper>
                     <Column>
                         <div>
-                            <Title>{product.title}</Title>
-                            <Desc>{product.description}</Desc>
+                        <Title>{product.title}</Title>
+                        <Desc>{product.description}</Desc>
                             <ButtonWrapper>
                                 <ButtonLink href={'/product/' + product._id} outline={1} white={1}>Xem thêm</ButtonLink>
                                 <Button white onClick={addFeaturedToCart}>
