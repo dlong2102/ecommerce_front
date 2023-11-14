@@ -162,8 +162,7 @@ export default function CartPage() {
                                     <Button onClick={()=> lessOfThisProduct(product._id)}>-</Button>
                                     <QuantityLabel>
                                     {cartProducts.filter(id=>id === product._id).length}
-                                    </QuantityLabel>
-                                    
+                                    </QuantityLabel>                                 
                                     <Button onClick={()=> moreOfThisProduct(product._id)}>+</Button>
                                 </td>
                                 <td>
