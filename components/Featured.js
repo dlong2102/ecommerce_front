@@ -57,21 +57,22 @@ const ButtonWrapper = styled.div`
 `;
 
 export default function Featured({ product }) {
-    const {addProduct} = useContext(CartContext);
+    const { addProduct } = useContext(CartContext);
     function addFeaturedToCart() {
-        addProduct(product._id);
-      }
+        addProduct(product?._id);
+    }
     return (
         <Bg>
             <Center>
                 <ColumnsWrapper>
                     <Column>
                         <div>
-                            <Title>{product.title}</Title>
-                            <Desc>{product.description}</Desc>
+                            <Title>{product?.title}</Title>
+                            <Desc>{product?.description}</Desc>
                             <ButtonWrapper>
-                                <ButtonLink href={'/product/' + product._id} outline={1} white={1}>Xem thêm</ButtonLink>
+                                <ButtonLink href="/products" outline={1} white={1}>Xem thêm</ButtonLink>
                                 <Button white onClick={addFeaturedToCart}>
+
                                     <CartIcon />
                                     Thêm vào giỏ hàng
                                 </Button>
@@ -79,7 +80,7 @@ export default function Featured({ product }) {
                         </div>
                     </Column>
                     <Column>
-                        <img src="https://khanhdang-next-ecommerce.s3.amazonaws.com/1699603211610.webp" />
+                        <img src="https://khanhdang-next-ecommerce.s3.amazonaws.com/1699675998254.webp" />
                     </Column>
                 </ColumnsWrapper>
             </Center>
