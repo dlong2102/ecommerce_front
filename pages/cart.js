@@ -7,6 +7,7 @@ import {CartContext} from "@/components/CartContext";
 import axios from "axios";
 import Table from "@/components/Table";
 import Input from "@/components/Input";
+import { RevealWrapper } from "next-reveal";
 
 const ColumnsWrapper = styled.div`
   display: grid;
@@ -134,10 +135,11 @@ export default function CartPage() {
           <Header />
           <Center>
             <ColumnsWrapper>
+            <RevealWrapper delay={0}>
             <Box>
-                <h2>Cart</h2>
+                <h2>Giỏ hàng</h2>
                 {!cartProducts?.length && (
-                    <div>Your cart is empty</div>
+                    <div>giỏ hàng đang trống</div>
                 )}
                 {products?.length > 0 && (
                 <Table>
@@ -160,27 +162,29 @@ export default function CartPage() {
                                 
                                 <td>
                                     <Button onClick={()=> lessOfThisProduct(product._id)}>-</Button>
-                                    <QuantityLabel>
-                                    {cartProducts.filter(id=>id === product._id).length}
-                                    </QuantityLabel>                                 
+                                    <QuantityLabel>{cartProducts.filter(id=>id === product._id).length}</QuantityLabel>                                 
                                     <Button onClick={()=> moreOfThisProduct(product._id)}>+</Button>
                                 </td>
+
+
                                 <td>
-                                    {cartProducts.filter(id=>id === product._id).length} VNĐ
+                                    ${cartProducts.filter(id=>id === product._id).length * product.price}
                                 </td>
                             </tr>                                    
                                 ))}
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>{total}VNĐ</td>
+                            <td>${total}</td>
                         </tr>
                     
                     </tbody>
               </Table>
               )}
             </Box>
+            </RevealWrapper>          
             {!!cartProducts?.length &&(
+              <RevealWrapper delay={100}>
                 <Box>
                 <h2>Thông tin đặt hàng</h2>          
                 <Input type="text" placeholder="Họ và Tên" value={name}
@@ -217,6 +221,8 @@ export default function CartPage() {
                 </Button>
                      
                 </Box>
+              </RevealWrapper>
+                
             )}
             
             </ColumnsWrapper>

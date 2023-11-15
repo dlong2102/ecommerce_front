@@ -5,6 +5,8 @@ import ButtonLink from "@/components/ButtonLink";
 import CartIcon from "./icons/CartIcon";
 import { useContext } from "react";
 import { CartContext } from "./CartContext";
+import FlyingButton from "./FlyingButton";
+import { RevealWrapper } from "next-reveal";
 
 const Bg = styled.div`
     background-color: #222;
@@ -57,29 +59,33 @@ const ButtonWrapper = styled.div`
 `;
 
 export default function Featured({product}) {
-    const {addProduct} = useContext(CartContext);
-    function addFeaturedToCart() {
-        addProduct(product?._id);
-      }
     return (
         <Bg>
             <Center>
                 <ColumnsWrapper>
                     <Column>
                         <div>
-                        <Title>{product?.title}</Title>
-                        <Desc>{product?.description}</Desc>
-                            <ButtonWrapper>
-                                <ButtonLink href={'/product/' + product._id} outline={1} white={1}>Xem thêm</ButtonLink>
-                                <Button white onClick={addFeaturedToCart}>
-                                    <CartIcon />
-                                    Thêm vào giỏ hàng
-                                </Button>
-                            </ButtonWrapper>
+                        
+                        <RevealWrapper origin={'left'} delay={0}>
+                            <Title>{product?.title}</Title>
+                            <Desc>{product?.description}</Desc>
+                                <ButtonWrapper>
+                                    <ButtonLink href={'/product/' + product._id} outline={1} white={1}>Xem thêm</ButtonLink>
+                                <FlyingButton white={1} _id={product._id} src={product.images?.[0]}>
+                                <CartIcon />
+                                        Thêm vào giỏ hàng
+                                </FlyingButton>
+                                    
+                                </ButtonWrapper>
+                        </RevealWrapper>
+                            
                         </div>
                     </Column>
                     <Column>
-                        <img src="https://khanhdang-next-ecommerce.s3.amazonaws.com/1699675998254.webp" />
+                    <RevealWrapper delay={0}>
+                    <img src="https://khanhdang-next-ecommerce.s3.amazonaws.com/1699675998254.webp" />
+                    </RevealWrapper>
+                        
                     </Column>
                 </ColumnsWrapper>
             </Center>

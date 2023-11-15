@@ -4,6 +4,7 @@ import CartIcon from "./icons/CartIcon";
 import Link from "next/link";
 import { useContext } from "react";
 import { CartContext } from "./CartContext";
+import FlyingButton from '@/components/FlyingButton'
 
 const ProductWrapper = styled.div`
     
@@ -53,8 +54,7 @@ const Price = styled.div`
     }
 `;
 
-export default function ProductBox({ _id, title, description, price, images }) {
-    const {addProduct}=useContext(CartContext);
+export default function ProductBox({ _id, title, description, price, images }) {  
     const url = '/product/'+_id;
     return (
         <ProductWrapper>
@@ -67,11 +67,9 @@ export default function ProductBox({ _id, title, description, price, images }) {
                 <Title href={url}>{title}</Title>
                 <PriceRow>
                     <Price>
-                        {price} vnđ
+                        ${price}
                     </Price>
-                    <div>
-                        <Button block onClick={() => addProduct(_id)} primary outline>Thêm vào giỏ hàng</Button>
-                    </div>
+                     <FlyingButton _id={_id} src={images?.[0]}>Thêm vào giỏ hàng</FlyingButton>           
                 </PriceRow>
             </ProductInfoBox>
         </ProductWrapper>
