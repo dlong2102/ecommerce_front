@@ -23,7 +23,8 @@ export default function Tabs({tabs,active,onChange}) {
         <StyledTab
           onClick={() => { onChange(tabName) }}
           active={tabName === active}
-        >{tabName}</StyledTab>
+        >{tabName}
+        </StyledTab>
       ))}
     </StyledTabs>
   );

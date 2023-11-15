@@ -7,6 +7,8 @@ export default async function handle(req, res) {
   await mongooseConnect();
   const {user} = await getServerSession(req, res, authOptions);
 
+  
+
   if (req.method === 'POST') {
     const {product} = req.body;
     const wishedDoc = await WishedProduct.findOne({userEmail:user.email,product});

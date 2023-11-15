@@ -7,8 +7,10 @@ import { CartContext } from "./CartContext";
 import HeartOutLineIcon from "./icons/HeartOutlineIcon";
 import HeartSolidIcon from "./icons/HeartSolidIcon";
 import axios from "axios";
-import FlyingButton from '@/components/FlyingButton'
-// import Button, {ButtonStyle} from "@/components/Button";
+import FlyingButton from '@/components/FlyingButton' // import Button, {ButtonStyle} from "@/components/Button";
+import { signIn, signOut, useSession } from "next-auth/react";
+
+
 
 const ProductWrapper = styled.div`
   button{
@@ -94,9 +96,15 @@ export default function ProductBox({
   }) {
     const url = '/product/'+_id;
     const [isWished,setIsWished] = useState(wished);
+    const { data: session } = useSession();
     function addToWishlist(ev) {
       ev.preventDefault();
       ev.stopPropagation();
+      if (!session) {
+        signIn('google');
+        console.log("User not logged in. Redirecting to login page...");
+        return;
+      }
       const nextValue = !isWished;
       if (nextValue === false && onRemoveFromWishlist) {
         onRemoveFromWishlist(_id);

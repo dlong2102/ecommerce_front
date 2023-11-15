@@ -11,8 +11,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "@/components/Spinner";
 import ProductBox from "@/components/ProductBox";
-// import Tabs from  "@/components/Tabs";
-// import SingleOrder from "@/components/SingleOrder";
+import Tabs from "@/components/Tabs";
+import SingleOrder from "@/components/SingleOrder";
 
 const ColsWrapper = styled.div`
   display: grid;
@@ -98,10 +98,10 @@ export default function AccountPage() {
     });
 
     // Lấy danh sách đơn hàng từ API
-    // axios.get('/api/orders').then(response => {
-    //   setOrders(response.data);
-    //   setOrderLoaded(true);
-    // });
+    axios.get('/api/orders').then(response => {
+      setOrders(response.data);
+      setOrderLoaded(true);
+    });
   }, [session]);
 
   // Hàm xử lý khi sản phẩm bị xóa khỏi danh sách yêu thích
@@ -119,32 +119,55 @@ export default function AccountPage() {
           <div>
             <RevealWrapper delay={0}>
               <WhiteBox>
-                <h2> Sản phẩm yêu thích </h2>
-                {!wishlistLoaded && (
-                  <Spinner fullWidth={true}></Spinner>
-                )}
-                {wishlistLoaded && (
+                <Tabs tabs={['Đơn hàng','Sản phẩm yêu thích']} 
+                active={activeTab}
+                onChange={setActiveTab}
+                />
+                {activeTab === 'Đơn hàng' &&(
                   <>
-                   <WishedProductsGrid>
-                    { wishedProducts.length > 0 && wishedProducts.map(wp =>(
-                        <ProductBox key={wp._id} {...wp} wished={true} 
-                        onRemoveFromWishlist={productRemovedFromWishlist}
-                         ></ProductBox>
-                    ))}
-                  </WishedProductsGrid>
-                  {wishedProducts.length === 0 && (
-                          <>
-                            {session && (
-                              <p>Không có sản phẩm yêu thích nào</p>
-                            )}
-                            {!session && (
-                              <p>Đăng nhập để thấy sản phẩm yêu thích</p>
-                            )}
-                          </>
+                  {!orderLoaded && (
+                    <Spinner fullWidth={true}></Spinner>
+                  )}
+                  {orderLoaded && (
+                      <div>
+                        {orders.length === 0 && (
+                          <p>Đăng nhập để thấy đơn hàng</p>
                         )}
-                  </>    
+                        {orders.length > 0 && orders.map(o => (
+                          <SingleOrder {...o} />
+                        ))}
+                      </div>
+                    )} 
+                  </>
                 )}
-
+                {activeTab === 'Sản phẩm yêu thích' && (
+                   <>
+                   {!wishlistLoaded && (
+                     <Spinner fullWidth={true}></Spinner>
+                   )}
+                   {wishlistLoaded && (
+                     <>
+                      <WishedProductsGrid>
+                       { wishedProducts.length > 0 && wishedProducts.map(wp =>(
+                           <ProductBox key={wp._id} {...wp} wished={true} 
+                           onRemoveFromWishlist={productRemovedFromWishlist}
+                            ></ProductBox>
+                       ))}
+                     </WishedProductsGrid>
+                     {wishedProducts.length === 0 && (
+                             <>
+                               {session && (
+                                 <p>Không có sản phẩm yêu thích nào</p>
+                               )}
+                               {!session && (
+                                 <p>Đăng nhập để thấy sản phẩm yêu thích</p>
+                               )}
+                             </>
+                           )}
+                     </>    
+                   )}
+                   </>
+                )}
               </WhiteBox>
             </RevealWrapper>
           </div>
