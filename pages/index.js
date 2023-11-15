@@ -3,26 +3,39 @@ import Header from "@/components/Header";
 import NewProducts from "@/components/NewProducts";
 import { mongooseConnect } from "@/lib/mongoose";
 import { Product } from "@/models/Product";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]";
+import { WishedProduct } from "@/models/WishedProduct";
+import { Session } from "next-auth";
 
-export default function HomePage({ feturedProduct, newProducts }) {
+export default function HomePage({ featuredProduct, newProducts ,wishedNewProducts}) {
   return (
     <div>
       <Header />
-      <Featured product={feturedProduct} />
-      <NewProducts products={newProducts} />
+      <Featured product={featuredProduct} />
+      <NewProducts products={newProducts} wishedNewProducts={wishedNewProducts} />
     </div>
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx) {
   const featuredProductId = '654eff68948cb38f683a2639';
   await mongooseConnect();
-  const feturedProduct = await Product.findById(featuredProductId);
+  const featuredProduct = await Product.findById(featuredProductId);
   const newProducts = await Product.find({}, null, { sort: { '_id': -1 }, limit: 10 });
+
+  const session = await getServerSession(ctx.req,ctx.res,authOptions);
+  const wishedNewProducts = session?.user
+  ? await WishedProduct.find({
+      userEmail:session.user.email,
+      product: newProducts.map(p => p._id.toString()),
+    })
+  : [];
   return {
     props: {
-      feturedProduct: JSON.parse(JSON.stringify(feturedProduct)),
+      featuredProduct: JSON.parse(JSON.stringify(featuredProduct)),
       newProducts: JSON.parse(JSON.stringify(newProducts)),
+      wishedNewProducts: wishedNewProducts.map(i => i.product.toString()),
     },
   };
 }

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Center from "./Center";
 import ProductBox from "./ProductBox";
+import ProductsGrid from "@/components/ProductsGrid";
 
 const ProductGird = styled.div`
     display: grid;
@@ -14,15 +15,11 @@ const Title = styled.h2`
   font-weight: normal;
 `;
 
-export default function NewProducts({ products }) {
+export default function NewProducts({ products, wishedProducts }) {
     return (
         <Center>
             <Title>New Arrivals</Title>
-            <ProductGird>
-                {products?.length > 0 && products.map(product => (
-                    <ProductBox {...product} />
-                ))}
-            </ProductGird>
+            <ProductsGrid products={products} wishedProducts={wishedProducts} />
         </Center>
     );
 }
