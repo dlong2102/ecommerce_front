@@ -58,34 +58,34 @@ const ButtonWrapper = styled.div`
     margin-top: 25px;
 `;
 
-export default function Featured({product}) {
+export default function Featured({ product }) {
     return (
         <Bg>
             <Center>
                 <ColumnsWrapper>
                     <Column>
                         <div>
-                        
-                        <RevealWrapper origin={'left'} delay={0}>
-                            <Title>{product?.title}</Title>
-                            <Desc>{product?.description}</Desc>
+
+                            <RevealWrapper origin={'left'} delay={0}>
+                                <Title>{product?.title}</Title>
+                                <Desc>{product?.description}</Desc>
                                 <ButtonWrapper>
                                     <ButtonLink href={'/product/' + product._id} outline={1} white={1}>Xem thêm</ButtonLink>
-                                <FlyingButton white={1} _id={product._id} src={product.images?.[0]}>
-                                <CartIcon />
+                                    <FlyingButton white={1} _id={product._id} src={product.images?.[0]}>
+                                        <CartIcon />
                                         Thêm vào giỏ hàng
-                                </FlyingButton>
-                                    
+                                    </FlyingButton>
+
                                 </ButtonWrapper>
-                        </RevealWrapper>
-                            
+                            </RevealWrapper>
+
                         </div>
                     </Column>
                     <Column>
-                    <RevealWrapper delay={0}>
-                    <img src="https://khanhdang-next-ecommerce.s3.amazonaws.com/1699675998254.webp" />
-                    </RevealWrapper>
-                        
+                        <RevealWrapper delay={0}>
+                            <img className={'main'} src={product.images?.[0]} alt="" />
+                        </RevealWrapper>
+
                     </Column>
                 </ColumnsWrapper>
             </Center>

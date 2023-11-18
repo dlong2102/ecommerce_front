@@ -2,9 +2,10 @@ import Link from "next/link";
 import styled from "styled-components";
 import Center from "@/components/Center";
 import { CartContext } from "./CartContext";
-import {useContext, useState} from "react";
+import { useContext, useState } from "react";
 import BarsIcon from "@/components/icons/Bars";
 import SearchIcon from "./icons/SearchIcon";
+
 
 const StyleHeader = styled.header`
     background-color: #222;
@@ -17,6 +18,8 @@ const Logo = styled(Link)`
     text-decoration:none;
     position: relative;
     z-index: 3;
+    font-weight: bold;
+    text-align: center;
 `;
 const Wrapper = styled.div`
     display: flex;
@@ -83,17 +86,17 @@ const SideIcons = styled.div`
   }
 `;
 export default function Header() {
-    const {cartProducts} = useContext(CartContext);
-    const [mobileNavActive,setMobileNavActive] = useState(false);
+    const { cartProducts } = useContext(CartContext);
+    const [mobileNavActive, setMobileNavActive] = useState(false);
     return (
         <StyleHeader>
             <Center>
                 <Wrapper>
-                    <Logo href={'/'}>Ecommerce</Logo>
+                    <Logo href={'/'}>4TL<br />Ecommerce Store</Logo>
                     <StyledNav mobileNavActive={mobileNavActive}>
                         <NavLink href={'/'}>Trang chủ</NavLink>
                         <NavLink href={'/products'}>Tất cả sản phẩm</NavLink>
-                        <NavLink href={'/categories'}>Loại sản phẩm</NavLink>
+                        <NavLink href={'/categories'}>Danh mục</NavLink>
                         <NavLink href={'/account'}>Tài khoản</NavLink>
                         <NavLink href={'/cart'}> Giỏ hàng ({cartProducts.length})</NavLink>
                     </StyledNav>
@@ -103,7 +106,7 @@ export default function Header() {
                             <BarsIcon />
                         </NavButton>
                     </SideIcons>
-                    
+
                 </Wrapper>
             </Center>
         </StyleHeader>

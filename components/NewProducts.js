@@ -17,7 +17,7 @@ const Title = styled.h2`
 export default function NewProducts({ products }) {
     return (
         <Center>
-            <Title>New Arrivals</Title>
+            <Title>Sản phẩm mới</Title>
             <ProductGird>
                 {products?.length > 0 && products.map(product => (
                     <ProductBox {...product} />

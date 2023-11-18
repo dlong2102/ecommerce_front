@@ -1,16 +1,14 @@
 import Center from "@/components/Center";
 import Header from "@/components/Header";
 import Title from "@/components/Title";
-import {mongooseConnect} from "@/lib/mongoose";
-import {Product} from "@/models/Product";
+import { mongooseConnect } from "@/lib/mongoose";
+import { Product } from "@/models/Product";
 import styled from "styled-components";
 import WhiteBox from "@/components/WhiteBox";
 import ProductImages from "@/components/ProductImages";
-import Button from "@/components/Button";
 import CartIcon from "@/components/icons/CartIcon";
-import {useContext} from "react";
-import {CartContext} from "@/components/CartContext";
 import FlyingButton from "@/components/FlyingButton";
+import ProductReviews from "@/components/ProductReviews";
 
 const ColWrapper = styled.div`
   display: grid;
@@ -30,13 +28,11 @@ const Price = styled.span`
   font-size: 1.4rem;
 `;
 
-export default function ProductPage({product}) {
-  const {addProduct} = useContext(CartContext);
+export default function ProductPage({ product }) {
   return (
     <>
       <Header />
       <Center>
-        <Title> </Title>
         <ColWrapper>
           <WhiteBox>
             <ProductImages images={product.images} />
@@ -50,12 +46,13 @@ export default function ProductPage({product}) {
               </div>
               <div>
                 <FlyingButton main _id={product._id} src={product.images?.[0]}>
-                <CartIcon />Thêm vào giỏ hàng
+                  <CartIcon />Thêm vào giỏ hàng
                 </FlyingButton>
               </div>
             </PriceRow>
           </div>
         </ColWrapper>
+        <ProductReviews product={product} />
       </Center>
     </>
   );
@@ -63,7 +60,7 @@ export default function ProductPage({product}) {
 
 export async function getServerSideProps(context) {
   await mongooseConnect();
-  const {id} = context.query;
+  const { id } = context.query;
   const product = await Product.findById(id);
   return {
     props: {
